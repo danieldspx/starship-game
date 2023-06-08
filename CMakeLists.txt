@@ -13,10 +13,7 @@ add_executable(
         include/GL/freeglut_std.h
         include/GL/glut.h
         src/main.cpp
-        src/Bola.h
-        src/Botao.h
-        src/Relogio.cpp src/Relogio.h
         src/Vector2.h
-        src/gl_canvas2d.cpp src/gl_canvas2d.h)
+        src/gl_canvas2d.cpp src/gl_canvas2d.h src/base/interfaces/IRender.h src/base/vectors/Vector2D.h src/base/interfaces/IMouse.h src/base/interfaces/IEntity.h src/actors/Starship.cpp src/actors/Starship.h src/actors/Starship.h)
 
 target_link_libraries(canvas_clion ${OpenGlLinkers})
