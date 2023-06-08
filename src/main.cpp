@@ -21,35 +21,37 @@
 #include <stdlib.h>
 
 #include "gl_canvas2d.h"
+#include "base/vectors/Vector2D.h"
+#include "SceneManager.h"
 
+float worldWidth = 500, worldHeight = 5000;
 int screenWidth = 500, screenHeight = 500; //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int mouseX, mouseY; //variaveis globais do mouse para poder exibir dentro da render().
+SceneManager* sceneManager = new SceneManager(worldWidth, worldHeight);
 
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis globais
 //Todos os comandos para desenho na canvas devem ser chamados dentro da render().
 //Deve-se manter essa fun��o com poucas linhas de codigo.
 void render()
 {
-    CV::clear(0, 0, 0);
+    sceneManager->render(screenWidth, screenHeight);
 }
 
 //funcao chamada toda vez que uma tecla for pressionada.
 void keyboard(int key)
 {
-
+    sceneManager->keyboardDown(key);
 }
 
 //funcao chamada toda vez que uma tecla for liberada
 void keyboardUp(int key)
 {
-    printf("\nLiberou: %d" , key);
+    sceneManager->keyboardUp(key);
 }
 
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int button, int state, int wheel, int direction, int x, int y)
-{
-
-}
+{}
 
 int main(void)
 {

@@ -8,7 +8,8 @@
 #include "../base/interfaces/IEntity.h"
 
 class Starship: public IEntity {
-	
+public:
+    void render(int screenWidth, int screenHeight) override;
 };
 
 

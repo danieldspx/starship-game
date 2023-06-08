@@ -8,8 +8,9 @@
 #include "IRender.h"
 #include "IMouse.h"
 #include "IIntersect.h"
+#include "IKeyboard.h"
 
-class IEntity: public IMouse, public IRender, public IIntersect {
+class IEntity: public IKeyboard, public IRender, public IIntersect {
 public:
     float r, g, b;
     void changeToRandomColor() {

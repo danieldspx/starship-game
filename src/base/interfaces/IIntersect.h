@@ -9,7 +9,7 @@
 
 class IIntersect {
 public:
-    virtual bool isIntersecting(ivec2 position) = 0;
+    virtual bool isIntersecting(fvec2 position) = 0;
 };
 
 #endif //VECTORGRAPHICS_IINTERSECT_H

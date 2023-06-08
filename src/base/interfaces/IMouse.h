@@ -9,7 +9,7 @@
 
 class IMouse {
 public:
-    virtual void mouse(int button, int state, int wheel, int direction, ivec2 position) = 0;
+    virtual void mouse(int button, int state, int wheel, int direction, fvec2 position) = 0;
     bool hovered, focused;
 
     bool isFocused() const {

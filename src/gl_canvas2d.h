@@ -10,6 +10,7 @@
 #include <GL/freeglut_ext.h> //callback da wheel do mouse.
 
 #include "Vector2.h"
+#include "base/vectors/Vector2D.h"
 
 #define PI_2 6.28318530717
 #define PI   3.14159265359
@@ -22,6 +23,7 @@ public:
     //funcoes para desenho de ponto e linha
     static void point(float x, float y); //coordeandas do ponto
     static void point(Vector2 pos); //coordeandas do ponto
+    static void point(fvec2 pos); //coordeandas do ponto
 
     static void line( float x1, float y1, float x2, float y2 ); //coordenadas da linha x1, y1, x2, y2
     static void line( Vector2 p1, Vector2 p2 ); //coordenadas da linha (p1, p2)
@@ -42,7 +44,7 @@ public:
     static void circle( Vector2 pos, float radius, int div );
 
     static void circleFill( float x, float y, float radius, int div );
-    static void circleFill( Vector2 pos, float radius, int div );
+    static void circleFill( fvec2 pos, float radius, int div );
 
     //especifica a cor de desenho e de limpeza de tela
     static void color(float r, float g, float b);

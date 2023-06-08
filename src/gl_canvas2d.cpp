@@ -55,6 +55,11 @@ void CV::point(float x, float y)
    glEnd();
 }
 
+void CV::point(fvec2 p)
+{
+    CV::point(p.x, p.y);
+}
+
 void CV::point(Vector2 p)
 {
    glBegin(GL_POINTS);
@@ -173,6 +178,11 @@ void CV::circleFill( float x, float y, float radius, int div )
          ang+=inc;
       }
    glEnd();
+}
+
+void CV::circleFill(fvec2 pos, float radius, int div )
+{
+    CV::circleFill(pos.x, pos.y, radius, div);
 }
 
 //coordenada de offset para desenho de objetos.
