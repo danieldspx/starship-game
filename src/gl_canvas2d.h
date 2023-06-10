@@ -14,6 +14,7 @@
 
 #define PI_2 6.28318530717
 #define PI   3.14159265359
+#define DEBUG 1
 
 #define Y_CANVAS_CRESCE_PARA_CIMA 0
 
@@ -40,11 +41,11 @@ public:
     static void polygonFill(float vx[], float vy[], int n_elems);
 
     //centro e raio do circulo
-    static void circle( float x, float y, float radius, int div );
-    static void circle( Vector2 pos, float radius, int div );
+    static void circle( float x, float y, float radius, int div, float ang = 0);
+    static void circle( fvec2 pos, float radius, int div, float ang = 0);
 
-    static void circleFill( float x, float y, float radius, int div );
-    static void circleFill( fvec2 pos, float radius, int div );
+    static void circleFill( float x, float y, float radius, int div, float ang = 0);
+    static void circleFill( fvec2 pos, float radius, int div, float ang = 0);
 
     //especifica a cor de desenho e de limpeza de tela
     static void color(float r, float g, float b);

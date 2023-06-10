@@ -14,6 +14,6 @@ add_executable(
         include/GL/glut.h
         src/main.cpp
         src/Vector2.h
-        src/gl_canvas2d.cpp src/gl_canvas2d.h src/base/interfaces/IRender.h src/base/vectors/Vector2D.h src/base/interfaces/IMouse.h src/base/interfaces/IEntity.h src/actors/Starship.cpp src/actors/Starship.h src/actors/Starship.h src/SceneManager.h src/SceneManager.cpp src/base/interfaces/IKeyboard.h src/base/Utils.h)
+        src/gl_canvas2d.cpp src/gl_canvas2d.h src/base/interfaces/IRender.h src/base/vectors/Vector2D.h src/base/interfaces/IMouse.h src/base/interfaces/IEntity.h src/SceneManager.h src/SceneManager.cpp src/base/interfaces/IKeyboard.h src/base/Utils.h src/actors/Spaceship.cpp src/actors/Spaceship.h)
 
 target_link_libraries(canvas_clion ${OpenGlLinkers})

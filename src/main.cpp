@@ -19,33 +19,44 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <chrono>
+#include <thread>
 
 #include "gl_canvas2d.h"
 #include "base/vectors/Vector2D.h"
 #include "SceneManager.h"
 
+#define FPS 60
+
 float worldWidth = 500, worldHeight = 5000;
 int screenWidth = 500, screenHeight = 500; //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int mouseX, mouseY; //variaveis globais do mouse para poder exibir dentro da render().
 SceneManager* sceneManager = new SceneManager(worldWidth, worldHeight);
+auto previousTime = std::chrono::high_resolution_clock::now();
 
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis globais
 //Todos os comandos para desenho na canvas devem ser chamados dentro da render().
 //Deve-se manter essa fun��o com poucas linhas de codigo.
 void render()
 {
-    sceneManager->render(screenWidth, screenHeight);
+    auto now = std::chrono::high_resolution_clock::now();
+
+    auto elapsed = std::chrono::duration<float>(now - previousTime).count();
+    previousTime = now;
+    sceneManager->render(screenWidth, screenHeight, elapsed);
 }
 
 //funcao chamada toda vez que uma tecla for pressionada.
 void keyboard(int key)
 {
+    printf("\nKey Down: %d\n", key);
     sceneManager->keyboardDown(key);
 }
 
 //funcao chamada toda vez que uma tecla for liberada
 void keyboardUp(int key)
 {
+    printf("\nKey Up: %d\n", key);
     sceneManager->keyboardUp(key);
 }
 
