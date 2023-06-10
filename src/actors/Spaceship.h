@@ -6,15 +6,21 @@
 #define CANVAS_CLION_SPACESHIP_H
 
 
+#include <vector>
+#include <chrono>
 #include "../base/interfaces/IEntity.h"
+#include "Bullet.h"
 
 class Spaceship: public IEntity {
 public:
     fvec2 position;
-    int keyPressed;
-    bool isKeyPressed;
+    int arrowKeyPressed;
+    bool isArrowKeyPressed;
     float speedX;
     float leftBoundary, rightBoundary, radius;
+    std::chrono::milliseconds firerate;
+    std::chrono::high_resolution_clock::time_point lastShoot;
+    std::vector<Bullet*> bullets;
 
     Spaceship(fvec2 initialPosition, float radius, float leftBoundary, float rightBoundary);
 
@@ -29,6 +35,10 @@ public:
     void renderSpaceship();
 
     void handleKeyPressed(int key, float dt);
+
+    void handleKeyUp(int key);
+
+    void shootBullet();
 };
 
 

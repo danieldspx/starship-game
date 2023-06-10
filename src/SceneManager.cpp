@@ -7,8 +7,8 @@
 #include "base/Utils.h"
 
 SceneManager::SceneManager(float worldWidth, float worldHeight) {
-    keyPressed = 0;
-    isKeyPressed = false;
+    arrowKeyPressed = 0;
+    isArrowKeyPressed = false;
     speedY = 350;
 
     leftLane = new fvec2[LANE_POINTS];
@@ -45,8 +45,8 @@ SceneManager::SceneManager(float worldWidth, float worldHeight) {
 
 void SceneManager::render(float screenWidth, float screenHeight, float dt) {
     CV::clear(0,0,0);
-    if (isKeyPressed) {
-        handleKeyPressed(keyPressed, dt);
+    if (isArrowKeyPressed) {
+        handleKeyPressed(arrowKeyPressed, dt);
     }
     renderLanes(screenWidth, screenHeight);
 
@@ -58,20 +58,22 @@ void SceneManager::handleKeyPressed(int key, float dt) {
         case 201:
         case 203:
             float distance = speedY * dt;
-            baseHeight += keyPressed == 201 ? distance : -distance ;
+            baseHeight += arrowKeyPressed == 201 ? distance : -distance ;
             break;
     }
 }
 
 void SceneManager::keyboardDown(int key) {
-    keyPressed = key;
-    isKeyPressed = true;
+    if (200 <= key && key <= 203) {
+        arrowKeyPressed = key;
+        isArrowKeyPressed = true;
+    }
 
     spaceship->keyboardDown(key);
 }
 
 void SceneManager::keyboardUp(int key) {
-    if (keyPressed == key) isKeyPressed = false;
+    if (arrowKeyPressed == key && 200 <= key && key <= 203) isArrowKeyPressed = false;
 
     spaceship->keyboardUp(key);
 }

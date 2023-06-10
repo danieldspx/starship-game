@@ -34,7 +34,7 @@ public:
     static void rect( Vector2 p1, Vector2 p2 ); //coordenadas do retangulo (p1, p2) - TO DO
 
     static void rectFill( float x1, float y1, float x2, float y2 ); //coordenadas do retangulo x1, y1, x2, y2
-    static void rectFill( Vector2 p1, Vector2 p2 ); //coordenadas do retangulo (p1, p2)
+    static void rectFill( fvec2 p1, fvec2 p2 ); //coordenadas do retangulo (p1, p2)
 
     //desenha um poligono CONVEXO. Para um retangulo, deve-se passar 4 vertices
     static void polygon(float vx[], float vy[], int n_elems);

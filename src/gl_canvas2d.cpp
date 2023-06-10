@@ -94,15 +94,6 @@ void CV::rectFill( float x1, float y1, float x2, float y2 )
       glVertex2d(x2, y1);
    glEnd();
 }
-void CV::rectFill( Vector2 p1, Vector2 p2 )
-{
-   glBegin(GL_QUADS);
-      glVertex2d(p1.x, p1.y);
-      glVertex2d(p1.x, p2.y);
-      glVertex2d(p2.x, p2.y);
-      glVertex2d(p2.x, p1.y);
-   glEnd();
-}
 
 void CV::polygon(float vx[], float vy[], int elems)
 {
@@ -350,5 +341,9 @@ void CV::init(int *w, int *h, const char *title)
 void CV::run()
 {
    glutMainLoop();
+}
+
+void CV::rectFill(fvec2 p1, fvec2 p2) {
+    CV::rectFill(p1.x, p1.y, p2.x, p2.y);
 }
 

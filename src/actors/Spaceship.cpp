@@ -7,6 +7,8 @@
 
 Spaceship::Spaceship(fvec2 initialPosition, float radius, float leftBoundary, float rightBoundary): position(initialPosition), radius(radius), leftBoundary(leftBoundary), rightBoundary(rightBoundary) {
     speedX = 150;
+    lastShoot= std::chrono::high_resolution_clock::now();
+    firerate = std::chrono::milliseconds(300);
 }
 
 bool Spaceship::isIntersecting(fvec2 p) {
@@ -14,18 +16,28 @@ bool Spaceship::isIntersecting(fvec2 p) {
 }
 
 void Spaceship::keyboardDown(int key) {
-    keyPressed = key;
-    isKeyPressed = true;
+    // Key V does not interfer
+    if (200 <= key && key <= 203) {
+        arrowKeyPressed = key;
+        isArrowKeyPressed = true;
+    }
 }
 
 void Spaceship::keyboardUp(int key) {
-    if (keyPressed == key) isKeyPressed = false;
+    if (arrowKeyPressed == key && 200 <= key && key <= 203) isArrowKeyPressed = false;
+
+    handleKeyUp(key);
 }
 
 void Spaceship::render(float screenWidth, float screenHeight, float dt) {
-    if (isKeyPressed) {
-        handleKeyPressed(keyPressed, dt);
+    if (isArrowKeyPressed) {
+        handleKeyPressed(arrowKeyPressed, dt);
     }
+
+    for (auto bullet: bullets) {
+        bullet->render(screenWidth, screenHeight, dt);
+    }
+
 
     renderSpaceship();
 }
@@ -46,7 +58,7 @@ void Spaceship::handleKeyPressed(int key, float dt) {
         case 200:
         case 202:
             float distance = speedX * dt;
-            position.x += keyPressed == 200 ? -distance : distance;
+            position.x += arrowKeyPressed == 200 ? -distance : distance;
             // Make sure that the spaceship does not go over the right boundary
             if (position.x + radius > rightBoundary) {
                 position.x = rightBoundary - radius;
@@ -57,4 +69,20 @@ void Spaceship::handleKeyPressed(int key, float dt) {
             }
             break;
     }
+}
+
+void Spaceship::handleKeyUp(int key) {
+    // Key is V
+    if (key == 118) {
+        shootBullet();
+    }
+}
+
+void Spaceship::shootBullet() {
+    auto now = std::chrono::high_resolution_clock::now();
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(now - lastShoot).count() >= firerate.count()) {
+        bullets.push_back(new Bullet(position, 200));
+        lastShoot = now;
+    }
+
 }

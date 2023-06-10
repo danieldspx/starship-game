@@ -18,8 +18,8 @@ public:
     SceneManager(float worldWidth, float worldHeight);
 
     float baseHeight, speedY;
-    int keyPressed;
-    bool isKeyPressed;
+    int arrowKeyPressed;
+    bool isArrowKeyPressed;
 
     Spaceship* spaceship;
     // Max and Min in the lanes in the X axes so
