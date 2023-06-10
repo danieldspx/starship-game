@@ -34,6 +34,8 @@ public:
 
     void keyboardUp(int key) override;
 
+    void handleKeyPressed(int key, float dt);
+
     void renderLanes(float screenWidth, float screenHeight);
 };
 

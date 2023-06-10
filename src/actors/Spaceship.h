@@ -11,9 +11,12 @@
 class Spaceship: public IEntity {
 public:
     fvec2 position;
-    float radius;
+    int keyPressed;
+    bool isKeyPressed;
+    float speedX;
+    float leftBoundary, rightBoundary, radius;
 
-    Spaceship(fvec2 initialPosition, float radius);
+    Spaceship(fvec2 initialPosition, float radius, float leftBoundary, float rightBoundary);
 
     bool isIntersecting(fvec2 p) override;
 
@@ -21,9 +24,11 @@ public:
 
     void keyboardUp(int key) override;
 
-    void render(float screenWidth, float screenHeight, float dt, float baseHeight) override;
+    void render(float screenWidth, float screenHeight, float dt) override;
 
     void renderSpaceship();
+
+    void handleKeyPressed(int key, float dt);
 };
 
 

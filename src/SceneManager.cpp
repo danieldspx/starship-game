@@ -11,13 +11,6 @@ SceneManager::SceneManager(float worldWidth, float worldHeight) {
     isKeyPressed = false;
     speedY = 350;
 
-    // Increment in the Y axes
-    float stepY = (worldHeight / LANE_POINTS);
-    baseHeight = 2*stepY;
-
-    float spaceshipRadius = 20;
-    spaceship = new Spaceship(fvec2{worldWidth/2, 25}, spaceshipRadius);
-
     leftLane = new fvec2[LANE_POINTS];
     rightLane = new fvec2[LANE_POINTS];
 
@@ -26,6 +19,9 @@ SceneManager::SceneManager(float worldWidth, float worldHeight) {
 
     // Define the range for random numbers
     float xRange = 50;
+    // Increment in the Y axes
+    float stepY = (worldHeight / LANE_POINTS);
+    baseHeight = 2*stepY;
 
     // Create a uniform distribution
     std::uniform_real_distribution<float> distribution(0, xRange);
@@ -42,24 +38,29 @@ SceneManager::SceneManager(float worldWidth, float worldHeight) {
         if (leftLaneMax < leftLane[i].x) leftLaneMax = leftLane[i].x;
         if (rightLaneMin > rightLane[i].x) rightLaneMin = rightLane[i].x;
     }
+
+    float spaceshipRadius = 20;
+    spaceship = new Spaceship(fvec2{worldWidth/2, 25}, spaceshipRadius, leftLaneMax, rightLaneMin);
 }
 
 void SceneManager::render(float screenWidth, float screenHeight, float dt) {
     CV::clear(0,0,0);
     if (isKeyPressed) {
-        float distance = speedY * dt;
-        switch (keyPressed) {
-            case 201:
-                baseHeight += distance;
-                break;
-            case 203:
-                baseHeight += -distance;
-                break;
-        }
+        handleKeyPressed(keyPressed, dt);
     }
     renderLanes(screenWidth, screenHeight);
 
-    spaceship->render(screenWidth, screenHeight, dt, baseHeight);
+    spaceship->render(screenWidth, screenHeight, dt);
+}
+
+void SceneManager::handleKeyPressed(int key, float dt) {
+    switch (key) {
+        case 201:
+        case 203:
+            float distance = speedY * dt;
+            baseHeight += keyPressed == 201 ? distance : -distance ;
+            break;
+    }
 }
 
 void SceneManager::keyboardDown(int key) {
@@ -70,7 +71,7 @@ void SceneManager::keyboardDown(int key) {
 }
 
 void SceneManager::keyboardUp(int key) {
-    isKeyPressed = false;
+    if (keyPressed == key) isKeyPressed = false;
 
     spaceship->keyboardUp(key);
 }
