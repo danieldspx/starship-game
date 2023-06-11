@@ -1,0 +1,37 @@
+//
+// Created by daniel on 10/06/23.
+//
+
+#ifndef CANVAS_CLION_MONSTER_H
+#define CANVAS_CLION_MONSTER_H
+
+
+#include <random>
+#include "../base/interfaces/IRender.h"
+#include "../base/vectors/Vector2D.h"
+
+class Monster: public IRender {
+
+public:
+    fvec2 position;
+    int type;
+    float speedX;
+    float leftBoundary, rightBoundary;
+
+    std::random_device rd;  // Seed for the random number engine
+    std::mt19937 rng; // Mersenne Twister random number engine
+    std::uniform_int_distribution<int> distribution;
+
+    Monster(fvec2 pos, int type, float leftBoundary, float rightBoundary);
+
+    void render(float screenWidth, float screenHeight, float dt) override;
+
+    void renderMonster();
+
+    static float getMonsterRadius(int type);
+
+    void animate(float dt);
+};
+
+
+#endif //CANVAS_CLION_MONSTER_H

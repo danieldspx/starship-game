@@ -40,6 +40,21 @@ class Utils {
                     throw std::runtime_error("Invalid index provided to bsplineFn");
             }
         }
+
+        static float modularReduction(float number, float modulus) {
+            // Calculate the integer quotient
+            float quotient = std::floor(number / modulus);
+
+            // Calculate the remainder
+            float remainder = number - (quotient * modulus);
+
+            // Ensure the remainder is within the range of [0, modulus)
+            if (remainder < 0) {
+                remainder += modulus;
+            }
+
+            return remainder;
+        }
 };
 
 

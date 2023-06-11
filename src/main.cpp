@@ -31,7 +31,7 @@
 float worldWidth = 500, worldHeight = 5000;
 int screenWidth = 500, screenHeight = 500; //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
 int mouseX, mouseY; //variaveis globais do mouse para poder exibir dentro da render().
-SceneManager* sceneManager = new SceneManager(worldWidth, worldHeight);
+SceneManager* sceneManager = new SceneManager(worldWidth, worldHeight, screenWidth, screenHeight);
 auto previousTime = std::chrono::high_resolution_clock::now();
 
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis globais

@@ -34,8 +34,18 @@ void Spaceship::render(float screenWidth, float screenHeight, float dt) {
         handleKeyPressed(arrowKeyPressed, dt);
     }
 
-    for (auto bullet: bullets) {
-        bullet->render(screenWidth, screenHeight, dt);
+    for (auto it = bullets.begin(); it != bullets.end(); ) {
+        (*it)->render(screenWidth, screenHeight, dt);
+
+        if ((*it)->getMinBoundary().y > screenHeight) {
+            delete *it; // Free the memory occupied by the bullet
+            it = bullets.erase(it); // Remove the bullet from the vector and update the iterator
+            if (DEBUG) {
+                printf("Removed Bullet instance\n");
+            }
+        } else {
+            ++it; // Move to the next bullet
+        }
     }
 
 
@@ -73,7 +83,7 @@ void Spaceship::handleKeyPressed(int key, float dt) {
 
 void Spaceship::handleKeyUp(int key) {
     // Key is V
-    if (key == 118) {
+    if (key == 86 || key == 118) {
         shootBullet();
     }
 }
