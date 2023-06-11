@@ -15,7 +15,7 @@ public:
     fvec2 position;
     float speed;
     float height = 15, width = 5;
-    float damage = 10;
+    float damage = 11;
 
     Bullet(fvec2 position, float speed);
 

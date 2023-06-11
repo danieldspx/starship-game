@@ -9,6 +9,16 @@ Monster::Monster(fvec2 pos, int type, float leftBoundary, float rightBoundary): 
     rng = std::mt19937(rd());
     distribution = std::uniform_int_distribution<int>(1, 10);
     speedX = 25;
+    if (type == 1) {
+        speedX = 25;
+        health = 5;
+    } else if (type == 2) {
+        speedX = 75;
+        health = 30;
+    } else if (type == 3) {
+        speedX = 100;
+        health = 100;
+    }
     // Move monsters randomly initially
     speedX = distribution(rng) % 2 == 0 ? +speedX : -speedX;
 }
@@ -73,4 +83,15 @@ float Monster::getMonsterRadius(int type) {
 
 bool Monster::isIntersecting(fvec2 p) {
     return position.distance(p) <= getMonsterRadius(type);
+}
+
+void Monster::hit(float damage) {
+    health -= damage;
+    if (DEBUG) {
+        printf("\nMonster hit with damage of %.2f, health is %.2f", damage, health);
+    }
+}
+
+bool Monster::isAlive() {
+    return health > 0;
 }

@@ -51,7 +51,7 @@ void SceneManager::initLevels(float worldHeight, float scrHeight) {
     levels[1] = {LevelDescriptor{1, 10}};
     levelsHeightTrigger[1] = scrHeight;
 
-    levels[2] = {LevelDescriptor{1, 3}};
+    levels[2] = {LevelDescriptor{1, 3}, LevelDescriptor{2, 5}};
     levelsHeightTrigger[2] = screenHeight * 2;
 
     levels[3] = {};
@@ -70,8 +70,14 @@ void SceneManager::render(float screenWidth, float scrHeight, float dt) {
 
     spaceship->render(screenWidth, screenHeight, dt);
 
-    for (auto monster: monsters) {
-        monster->render(screenWidth, screenHeight, dt);
+    for (auto itMonster = monsters.begin(); itMonster != monsters.end();) {
+        if ((*itMonster)->isAlive()) {
+            (*itMonster)->render(screenWidth, screenHeight, dt);
+            itMonster++;
+        } else {
+            delete *itMonster;
+            itMonster = monsters.erase(itMonster);
+        }
     }
 
     checkBulletsHits();
@@ -92,6 +98,12 @@ void SceneManager::handleKeyPressed(int key, float dt) {
 }
 
 void SceneManager::updateHeight(float newHeight) {
+    // We do not allow moving back or forward when there are monsters,
+    // the user should fight the monsters before moving. The idea
+    // is to not allow the user to run away from them.
+    if (!monsters.empty()) {
+        return;
+    }
     int levelIndex = currentLevel + 1 > endLevel ? endLevel : currentLevel + 1;
     if (levelsHeightTrigger[levelIndex] < newHeight) {
         setLevel(levelIndex);
@@ -106,13 +118,18 @@ void SceneManager::setLevel(int level) {
         return;
     }
     float laneWidth = rightLaneMin - leftLaneMax;
+    float posAcc = 0;
     for (auto levelDescriptor: levels[currentLevel]) {
         float monsterRadius = Monster::getMonsterRadius(levelDescriptor.monsterType);
         for (int i = 0; i < levelDescriptor.quantity; i++) {
-            float posX = monsterRadius + i*monsterRadius*4;
+            float posX = posAcc + monsterRadius + i*monsterRadius*4;
             fvec2 pos = fvec2{leftLaneMax + Utils::modularReduction(posX, laneWidth), screenHeight - 2*monsterRadius - 2*monsterRadius*floor(posX/laneWidth)};
-            if (DEBUG) printf("\nMonster position: (%f, %f)\n", pos.x, pos.y);
+            if (DEBUG) printf("\nMonster position: (%.2f, %.2f)", pos.x, pos.y);
             monsters.push_back(new Monster(pos, levelDescriptor.monsterType, leftLaneMax, rightLaneMin));
+
+            if (i + 1 >= levelDescriptor.quantity) {
+                posAcc += posX + monsterRadius;
+            }
         }
     }
 }
@@ -167,12 +184,11 @@ void SceneManager::checkBulletsHits() {
                 monster->isIntersecting(bullet->position)
             ) {
                 delete *itBullet; // Free the memory occupied by the bullet
-                delete *itMonster; // Free the memory occupied by the monster
-                itMonster = monsters.erase(itMonster); // Remove the monster from the vector and update the iterator
+                monster->hit(bullet->damage);
                 itBullet = spaceship->bullets.erase(itBullet); // Remove the bullet from the vector and update the iterator
                 bulletRemoved = true;
                 if (DEBUG) {
-                    printf("Bullet intercepted monster\n");
+                    printf("\nBullet intercepted monster\n");
                 }
                 break;
             } else {

@@ -18,6 +18,7 @@ public:
     int type;
     float speedX;
     float leftBoundary, rightBoundary;
+    float health;
 
     std::random_device rd;  // Seed for the random number engine
     std::mt19937 rng; // Mersenne Twister random number engine
@@ -34,6 +35,10 @@ public:
     static float getMonsterRadius(int type);
 
     void animate(float dt);
+
+    void hit(float damage);
+
+    bool isAlive();
 };
 
 

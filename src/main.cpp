@@ -49,14 +49,14 @@ void render()
 //funcao chamada toda vez que uma tecla for pressionada.
 void keyboard(int key)
 {
-    printf("\nKey Down: %d\n", key);
+//    printf("\nKey Down: %d\n", key);
     sceneManager->keyboardDown(key);
 }
 
 //funcao chamada toda vez que uma tecla for liberada
 void keyboardUp(int key)
 {
-    printf("\nKey Up: %d\n", key);
+//    printf("\nKey Up: %d\n", key);
     sceneManager->keyboardUp(key);
 }
 
