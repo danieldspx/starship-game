@@ -16,21 +16,30 @@ void Bullet::render(float screenWidth, float screenHeight, float dt) {
 }
 
 void Bullet::renderBullet() {
-    auto minBoundary = getMinBoundary();
-    auto maxBoundary = getMaxBoundary();
+    auto minBoundary = getLeftDownBoundary();
+    auto maxBoundary = getRightUpBoundary();
     CV::color(8);
     CV::rectFill(minBoundary, maxBoundary);
 }
 
-fvec2 Bullet::getMinBoundary() {
+fvec2 Bullet::getLeftDownBoundary() {
     return fvec2{position.x - width/2, position.y};
 }
 
-fvec2 Bullet::getMaxBoundary() {
-    auto minBoundary = getMinBoundary();
+fvec2 Bullet::getRightUpBoundary() {
+    auto minBoundary = getLeftDownBoundary();
     return fvec2{minBoundary.x + width, minBoundary.y + height};
 }
 
 bool Bullet::isIntersecting(fvec2 position) {
     return false;
+}
+
+fvec2 Bullet::getLeftUpBoundary() {
+    return fvec2{position.x - width/2, position.y + height};
+}
+
+fvec2 Bullet::getRightDownBoundary() {
+    auto minBoundary = getLeftDownBoundary();
+    return fvec2{minBoundary.x + width, minBoundary.y};
 }

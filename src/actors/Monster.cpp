@@ -9,6 +9,7 @@ Monster::Monster(fvec2 pos, int type, float leftBoundary, float rightBoundary): 
     rng = std::mt19937(rd());
     distribution = std::uniform_int_distribution<int>(1, 10);
     speedX = 25;
+    // Move monsters randomly initially
     speedX = distribution(rng) % 2 == 0 ? +speedX : -speedX;
 }
 
@@ -68,4 +69,8 @@ float Monster::getMonsterRadius(int type) {
             return 25;
     }
     return 0;
+}
+
+bool Monster::isIntersecting(fvec2 p) {
+    return position.distance(p) <= getMonsterRadius(type);
 }

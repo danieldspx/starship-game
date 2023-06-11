@@ -58,6 +58,8 @@ public:
     void updateHeight(float newHeight);
 
     void setLevel(int level);
+
+    void checkBulletsHits();
 };
 
 

@@ -9,8 +9,9 @@
 #include <random>
 #include "../base/interfaces/IRender.h"
 #include "../base/vectors/Vector2D.h"
+#include "../base/interfaces/IIntersect.h"
 
-class Monster: public IRender {
+class Monster: public IRender, public IIntersect {
 
 public:
     fvec2 position;
@@ -23,6 +24,8 @@ public:
     std::uniform_int_distribution<int> distribution;
 
     Monster(fvec2 pos, int type, float leftBoundary, float rightBoundary);
+
+    bool isIntersecting(fvec2 position) override;
 
     void render(float screenWidth, float screenHeight, float dt) override;
 

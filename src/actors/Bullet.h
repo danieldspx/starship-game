@@ -25,9 +25,13 @@ public:
 
     void renderBullet();
 
-    fvec2 getMinBoundary();
+    fvec2 getLeftDownBoundary();
 
-    fvec2 getMaxBoundary();
+    fvec2 getLeftUpBoundary();
+
+    fvec2 getRightUpBoundary();
+
+    fvec2 getRightDownBoundary();
 };
 
 
