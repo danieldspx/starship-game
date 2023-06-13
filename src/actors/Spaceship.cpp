@@ -7,6 +7,7 @@
 
 Spaceship::Spaceship(fvec2 initialPosition, float radius, float leftBoundary, float rightBoundary): position(initialPosition), radius(radius), leftBoundary(leftBoundary), rightBoundary(rightBoundary) {
     speedX = 150;
+    health = 50;
     lastShoot= std::chrono::high_resolution_clock::now();
     firerate = std::chrono::milliseconds(300);
 }
@@ -91,7 +92,14 @@ void Spaceship::handleKeyUp(int key) {
 void Spaceship::shootBullet() {
     auto now = std::chrono::high_resolution_clock::now();
     if (std::chrono::duration_cast<std::chrono::milliseconds>(now - lastShoot).count() >= firerate.count()) {
-        bullets.push_back(new Bullet(position, 200));
+        bullets.push_back(new Bullet(position, 200, 11, 8));
         lastShoot = now;
     }
+}
+
+void Spaceship::hit(float damage) {
+    if (DEBUG) {
+        printf("Spaceshipt hit. Damage is %f. New Health is %f.\n", damage, health);
+    }
+    health -= damage;
 }

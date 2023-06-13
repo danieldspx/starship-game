@@ -14,7 +14,7 @@
 
 #define PI_2 6.28318530717
 #define PI   3.14159265359
-#define DEBUG 1
+#define DEBUG 0
 
 #define Y_CANVAS_CRESCE_PARA_CIMA 0
 

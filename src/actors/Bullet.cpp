@@ -5,7 +5,7 @@
 #include "Bullet.h"
 #include "../gl_canvas2d.h"
 
-Bullet::Bullet(fvec2 position, float speed): position(position), speed(speed) {
+Bullet::Bullet(fvec2 position, float speed, float damage, int color): position(position), speed(speed), damage(damage), color(color) {
 
 }
 
@@ -18,7 +18,7 @@ void Bullet::render(float screenWidth, float screenHeight, float dt) {
 void Bullet::renderBullet() {
     auto minBoundary = getLeftDownBoundary();
     auto maxBoundary = getRightUpBoundary();
-    CV::color(8);
+    CV::color(color);
     CV::rectFill(minBoundary, maxBoundary);
 }
 

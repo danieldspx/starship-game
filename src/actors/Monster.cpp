@@ -5,18 +5,25 @@
 #include "Monster.h"
 #include "../gl_canvas2d.h"
 
-Monster::Monster(fvec2 pos, int type, float leftBoundary, float rightBoundary): position(pos), type(type), leftBoundary(leftBoundary), rightBoundary(rightBoundary) {
+Monster::Monster(fvec2 pos, int type, float leftBoundary, float rightBoundary, std::function<void(Bullet*)> _addBulletCallback): position(pos), type(type), leftBoundary(leftBoundary), rightBoundary(rightBoundary) {
+    addBulletCallback = std::move(_addBulletCallback);
+    _addBulletCallback = nullptr;
+
     rng = std::mt19937(rd());
     distribution = std::uniform_int_distribution<int>(1, 10);
-    speedX = 25;
+    lastShoot = std::chrono::high_resolution_clock::now() + std::chrono::milliseconds(300 * distribution(rng));
+
     if (type == 1) {
         speedX = 25;
         health = 5;
+        firerate = std::chrono::milliseconds(3000);
     } else if (type == 2) {
         speedX = 75;
         health = 30;
+        firerate = std::chrono::milliseconds(2500);
     } else if (type == 3) {
-        speedX = 100;
+        firerate = std::chrono::milliseconds(600);
+        speedX = 170;
         health = 100;
     }
     // Move monsters randomly initially
@@ -26,6 +33,7 @@ Monster::Monster(fvec2 pos, int type, float leftBoundary, float rightBoundary): 
 void Monster::render(float screenWidth, float screenHeight, float dt) {
     renderMonster();
     animate(dt);
+    shootBullet();
 }
 
 void Monster::animate(float dt) {
@@ -94,4 +102,12 @@ void Monster::hit(float damage) {
 
 bool Monster::isAlive() {
     return health > 0;
+}
+
+void Monster::shootBullet() {
+    auto now = std::chrono::high_resolution_clock::now();
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(now - lastShoot).count() >= firerate.count()) {
+        addBulletCallback(new Bullet(position, -160, 7, 4));
+        lastShoot = now;
+    }
 }

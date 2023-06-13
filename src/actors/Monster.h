@@ -7,6 +7,9 @@
 
 
 #include <random>
+#include <functional>
+#include <chrono>
+#include "./Bullet.h"
 #include "../base/interfaces/IRender.h"
 #include "../base/vectors/Vector2D.h"
 #include "../base/interfaces/IIntersect.h"
@@ -24,7 +27,12 @@ public:
     std::mt19937 rng; // Mersenne Twister random number engine
     std::uniform_int_distribution<int> distribution;
 
-    Monster(fvec2 pos, int type, float leftBoundary, float rightBoundary);
+    std::function<void(Bullet*)> addBulletCallback;
+
+    std::chrono::milliseconds firerate;
+    std::chrono::high_resolution_clock::time_point lastShoot;
+
+    Monster(fvec2 pos, int type, float leftBoundary, float rightBoundary, std::function<void(Bullet*)> addBulletCallback);
 
     bool isIntersecting(fvec2 position) override;
 
@@ -39,6 +47,8 @@ public:
     void hit(float damage);
 
     bool isAlive();
+
+    void shootBullet();
 };
 
 

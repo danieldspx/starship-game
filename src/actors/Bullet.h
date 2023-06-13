@@ -15,9 +15,10 @@ public:
     fvec2 position;
     float speed;
     float height = 15, width = 5;
-    float damage = 11;
+    float damage;
+    float color;
 
-    Bullet(fvec2 position, float speed);
+    Bullet(fvec2 position, float speed, float damage, int color);
 
     void render(float screenWidth, float screenHeight, float dt) override;
 

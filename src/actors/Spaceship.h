@@ -18,6 +18,7 @@ public:
     bool isArrowKeyPressed;
     float speedX;
     float leftBoundary, rightBoundary, radius;
+    float health;
     std::chrono::milliseconds firerate;
     std::chrono::high_resolution_clock::time_point lastShoot;
     std::vector<Bullet*> bullets;
@@ -39,6 +40,8 @@ public:
     void handleKeyUp(int key);
 
     void shootBullet();
+
+    void hit(float damage);
 };
 
 

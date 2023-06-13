@@ -8,6 +8,7 @@
 #include <random>
 #include <map>
 #include <vector>
+#include <functional>
 #include "base/interfaces/IMouse.h"
 #include "base/interfaces/IRender.h"
 #include "base/interfaces/IKeyboard.h"
@@ -27,6 +28,10 @@ public:
 
     int currentLevel;
     int endLevel;
+    bool gameEnded;
+    bool gameWon;
+    std::vector<Bullet*> monsterBullets;
+    std::function<void(Bullet*)> addBulletsFn;
 
     float baseHeight, speedY, screenHeight;
     int arrowKeyPressed;
